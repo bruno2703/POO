@@ -80,8 +80,17 @@ std::vector<int> reverse(std::vector<int> vet){
 
 void reverse_inplace(std::vector<int> &vet){
 
-    vet.reverse();
-    return vet;
+    int size = vet.size();
+    vector<int> temp;
+
+    for(int i{0}; i<size; i++){
+        temp.push_back(vet[i]);
+    }
+
+    for(int i{1}; i<=size; i++){
+        vet.push_back(temp[size-i]);
+    }
+
 }; // todo 
 
 std::vector<int> unique(std::vector<int> vet); // todo 
@@ -92,9 +101,9 @@ int main(){
 
     vector<int> myList{5,3,-1,-50,-1,-99};
 
-    vector<int> List = reverse(myList); 
+    reverse_inplace(myList); 
 
-    for (auto i = List.begin(); i != List.end(); i++)
+    for (auto i = myList.begin(); i != myList.end(); i++)
       cout << *i << " ";
 
     return 0;
