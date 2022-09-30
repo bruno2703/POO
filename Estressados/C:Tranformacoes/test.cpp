@@ -1,6 +1,7 @@
 #include <iostream>
 #include <algorithm>
 #include <vector>
+#include <list>
 #include "aux.hpp"
 #include <bits/stdc++.h>
 using namespace aux;
@@ -80,28 +81,62 @@ std::vector<int> reverse(std::vector<int> vet){
 
 void reverse_inplace(std::vector<int> &vet){
 
-    int size = vet.size();
-    vector<int> temp;
-
-    for(int i{0}; i<size; i++){
-        temp.push_back(vet[i]);
-    }
-
-    for(int i{1}; i<=size; i++){
-        vet.push_back(temp[size-i]);
-    }
+    std::reverse(vet.begin(), vet.end());
 
 }; // todo 
 
-std::vector<int> unique(std::vector<int> vet); // todo 
+std::vector<int> unique(std::vector<int> vet){
+    
+    vector<int> vector; 
+    int size = vet.size();
 
-std::vector<int> repeated(std::vector<int> vet); // todo 
+    sort(vet.begin(), vet.end(), greater<int>());
+    vector = vet;
+    int C{-1};
+
+    for(int i{0}; i<size; i++){
+
+        if(vet[i] == vet[i+1]){
+
+            int x=i+1;
+            int prox = vet[x];
+            while(vet[x] == prox){
+                x++;
+            }
+            vet[i+1] = vet[x];
+            C++;
+        }
+    }
+
+    vet.resize(std::distance(vector.begin(), (vector.end() - C)));
+
+    return vet;
+}; // todo 
+
+std::vector<int> repeated(std::vector<int> vet){
+
+    vector<int> vetor;
+    int size = vet.size();
+
+    for(int i{0}; i<size; i++){
+
+        for(int Z{i+1}; Z<size; Z++)
+        {
+            if(vet[i] == vet[Z]){
+                vetor.push_back(vet[i]);
+            }
+        }
+    }
+
+
+    return vetor;
+}; // todo 
 
 int main(){
 
-    vector<int> myList{5,3,-1,-50,-1,-99};
+    vector<int> myList{5,3,1,1,3,2};
 
-    reverse_inplace(myList); 
+    myList = repeated(myList); 
 
     for (auto i = myList.begin(); i != myList.end(); i++)
       cout << *i << " ";
