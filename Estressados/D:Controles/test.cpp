@@ -7,6 +7,13 @@ using namespace aux;
 using namespace std;
 
 std::vector<std::pair<int, int>> occurr(std::vector<int> vet) {
+
+    vector<int> lista;
+
+    for(int i{0}; vet.size() > i; i++){
+        ;
+    }
+    
     return {}; // todo
 }
 
