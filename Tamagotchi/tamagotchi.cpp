@@ -84,12 +84,33 @@ public:
     }
 
     void shower() {
+        if (!testAlive())
+            return;
+        setEnergy(getEnergy() - 3);
+        setHungry(getHungry() - 1);
+        setClean(getClean() + getCleanMax());
+        diamonds += 0;
+        age += 2;
     }
-
+    
     void eat() {
+        if (!testAlive())
+            return;
+        setEnergy(getEnergy() - 1);
+        setHungry(getHungry() + 4);
+        setClean(getClean() - 2);
+        diamonds += 0;
+        age += 1;
     }
-
+//O Comando "$sleep" aumenta energia até o máximo e idade aumenta do número de turnos que o pet dormiu.
     void sleep() {
+        if (!testAlive())
+            return;
+        setEnergy(getEnergy() + getEnergyMax());
+        setHungry(getHungry() + 0);
+        setClean(getClean() + 0);
+        diamonds += 0;
+        age += (getEnergyMax() - getEnergy());
     }
 
 
