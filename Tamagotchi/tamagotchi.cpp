@@ -106,11 +106,12 @@ public:
     void sleep() {
         if (!testAlive())
             return;
+        age += (getEnergyMax() - getEnergy());
         setEnergy(getEnergy() + getEnergyMax());
         setHungry(getHungry() + 0);
         setClean(getClean() + 0);
         diamonds += 0;
-        age += (getEnergyMax() - getEnergy());
+
     }
 
 
