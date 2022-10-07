@@ -73,7 +73,7 @@ public:
         else if(distancia >= gas)
         {
             km += gas;
-            std:: cout << "fail: tanque vazio apos andar " << gas <<"\n";
+            std:: cout << "fail: tanque vazio apos andar " << gas <<" km\n";
             gas = 0;
         }
         else
