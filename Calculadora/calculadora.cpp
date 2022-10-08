@@ -32,27 +32,29 @@ struct Calculator {
 
     bool useBattery()
     {
-        if(battery <= 0) std::cout << "fail: bateria insuficiente" <<"\n";
+        if(battery <= 0)
+        {
+            std::cout << "fail: bateria insuficiente" <<"\n";
+            return false;
+        } 
         else
         {
-        battery-- ;
+            battery-- ;
+            return true;
         }
-        return {}; // todo 
     }
 
     void sum(int a, int b)
     { 
-        display = a+b;
-        useBattery();
+        if(useBattery()) display = a+b;
     }
 
     void division(int num, int den)
     {
-        if(den == 0) std::cout << "fail: divisao por zero" <<"\n";
-        else
+        if(useBattery())
         {
-        display = num/den;
-        useBattery();
+            if(den == 0) std::cout << "fail: divisao por zero" <<"\n";
+            else display = (float) num/den;
         }
     }
 

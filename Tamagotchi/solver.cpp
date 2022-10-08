@@ -1,3 +1,13 @@
+/*
+1)
+Fiz sozinho
+2)
+sem duvidas
+3)
+3 horas apenas
+*/
+
+
 #include <iostream>
 #include <vector>
 #include <sstream>
@@ -32,15 +42,47 @@ private:
         }
     }
     void setEnergy(int value) {
+        if (value <= 0)
+        {
+            energy = 0;
+            std::cout << "fail: pet morreu de fraqueza" << "\n";
+            alive = false;
+        }
+        else if(value > energyMax) energy = energyMax;
+        else energy = value;;
     }
 
     void setClean(int value) {
+        if (value <=0 )
+        {
+            clean = 0;
+            std::cout << "fail: pet morreu de sujeira" <<"\n";
+            alive = false;
+        }
+        else if(value>cleanMax) clean = cleanMax;
+        else clean = value;
     }
 
 
 public:
-    Pet(int energy = 0, int hungry = 0, int clean = 0) { //todo
+    Pet(int energy=0, int hungry=0, int clean=0) {
+        if((energy+hungry+clean)>0)
+        {
+        energyMax = energy;
+        hungryMax = hungry;
+        cleanMax = clean;
+
+        setEnergy(energy);
+        setHungry(hungry);
+        setClean(clean);
+
+        diamonds=0;
+        age=0;
+
+        alive = true;
+        }
     }
+
 
     void play() {
         if (!testAlive())
@@ -53,12 +95,37 @@ public:
     }
 
     void shower() {
+        if (!testAlive())
+            return;
+        setEnergy(getEnergy() - 3);
+        setHungry(getHungry() - 1);
+        setClean(getClean() + getCleanMax());
+        diamonds += 0;
+        age += 2;
     }
-
+    
     void eat() {
+        if (!testAlive())
+            return;
+        setEnergy(getEnergy() - 1);
+        setHungry(getHungry() + 4);
+        setClean(getClean() - 2);
+        diamonds += 0;
+        age += 1;
     }
 
     void sleep() {
+        if (!testAlive())
+            return;
+        if((getEnergyMax() - 5) >= getEnergy())
+        {
+        age += (getEnergyMax() - getEnergy());
+        setEnergy(getEnergy() + getEnergyMax());
+        setHungry(getHungry() - 1);
+        setClean(getClean() + 0);
+        diamonds += 0;
+        }
+        else std::cout << "fail: nao esta com sono" <<"\n";
     }
 
 

@@ -102,7 +102,7 @@ public:
         diamonds += 0;
         age += 1;
     }
-//O Comando "$sleep" aumenta energia até o máximo e idade aumenta do número de turnos que o pet dormiu.
+
     void sleep() {
         if (!testAlive())
             return;
