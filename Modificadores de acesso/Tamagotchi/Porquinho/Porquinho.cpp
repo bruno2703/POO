@@ -1,6 +1,6 @@
 /*
 1)
-Fiz sozinho(com as explicações do moodle)
+Fiz sozinho(com o que tava no moodle)
 2)
 sem duvidas
 3)
