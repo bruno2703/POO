@@ -77,28 +77,48 @@ public:
     }
     
     bool addCoin(Coin coin) {
+        if(broken==false)
+        {
         this->value += coin.getValue();
         this->volume += coin.getVolume();
+        }
+        else std::cout << "fail: the pig is broken";
         return {}; // todo
     }
 
     bool addItem(Item item) {
+        if(broken==false)
+        {
         this->volume += item.getVolume();
         this-> itens.push_back(item.getLabel());
+        }
+        else std::cout << "fail: the pig is broken";
         return {}; // todo
-
     }
 
     bool breakPig() {
+        broken = true;
+        this->volume = 0;
         return {}; // todo
     }
 
     double getCoins() {
+        if(broken)
+        {
+        std::cout << aux::fmt(value);
+        }
+        else std::cout << "fail: you must break the pig first";
         return {}; // todo
     }
 
     std::string getItems() {
-        return {}; // todo
+        std::stringstream SS;
+        if(broken)
+        {
+        SS << aux::fmt(this->itens);
+        }
+        else SS << "fail: you must break the pig first";
+        return SS.str(); // todo
     }
 
     std::string str() const {
