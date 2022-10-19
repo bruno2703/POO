@@ -34,17 +34,21 @@ class Item {
     std::string label;
     int volume;
 public:
-    Item(std::string label, int volume) { //todo
+    Item(std::string label, int volume) {
+        setVolume(volume);
+        setLabel(label);
     }
     int getVolume() const {
-        return {}; // todo
+        return volume; // todo
     }
     std::string getLabel() const {
-        return {}; // todo
+        return label; // todo
     }
     void setVolume(int volume) {
+        this-> volume = volume;
     }
     void setLabel(std::string label) {
+        this->label = label;
     }
     std::string str() const {
         return {}; // todo
@@ -73,10 +77,14 @@ public:
     }
     
     bool addCoin(Coin coin) {
+        this->value += coin.getValue();
+        this->volume += coin.getVolume();
         return {}; // todo
     }
 
     bool addItem(Item item) {
+        this->volume += item.getVolume();
+        this-> itens.push_back(item.getLabel());
         return {}; // todo
 
     }
