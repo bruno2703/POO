@@ -1,3 +1,12 @@
+/*
+1)
+Fiz sozinho(com as explicações do moodle)
+2)
+sem duvidas
+3)
+5 horas
+*/
+
 #include <iostream>
 #include <vector>
 #include <utility>
@@ -39,10 +48,10 @@ public:
         setLabel(label);
     }
     int getVolume() const {
-        return volume; // todo
+        return volume; 
     }
     std::string getLabel() const {
-        return label; // todo
+        return label; 
     }
     void setVolume(int volume) {
         this-> volume = volume;
@@ -82,8 +91,8 @@ public:
         this->value += coin.getValue();
         this->volume += coin.getVolume();
         }
-        else std::cout << "fail: the pig is broken";
-        return {}; // todo
+        else std::cout << "fail: the pig is broken"<<"\n";
+        return {}; 
     }
 
     bool addItem(Item item) {
@@ -92,23 +101,24 @@ public:
         this->volume += item.getVolume();
         this-> itens.push_back(item.getLabel());
         }
-        else std::cout << "fail: the pig is broken";
-        return {}; // todo
+        else std::cout << "fail: the pig is broken"<<"\n";
+        return {}; 
     }
 
     bool breakPig() {
         broken = true;
         this->volume = 0;
-        return {}; // todo
+        return {}; 
     }
 
     double getCoins() {
         if(broken)
         {
-        std::cout << aux::fmt(value);
+        std::cout << value;
+        value = 0;
         }
-        else std::cout << "fail: you must break the pig first";
-        return {}; // todo
+        else std::cout << "fail: you must break the pig first"<<"\n";
+        return {}; 
     }
 
     std::string getItems() {
@@ -116,9 +126,10 @@ public:
         if(broken)
         {
         SS << aux::fmt(this->itens);
+        itens.clear();
         }
-        else SS << "fail: you must break the pig first";
-        return SS.str(); // todo
+        else SS << "fail: you must break the pig first"<<"\n";
+        return SS.str(); 
     }
 
     std::string str() const {
