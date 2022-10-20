@@ -112,10 +112,12 @@ public:
     }
 
     double getCoins() {
+        std::stringstream SS;
         if(broken)
         {
-        std::cout << value;
-        value = 0;
+        SS << aux::fmt(value);
+        std::string V = SS.str();
+        std::cout << V;
         }
         else std::cout << "fail: you must break the pig first"<<"\n";
         return {}; 
@@ -138,6 +140,8 @@ public:
            << aux::fmt(value) << "$ : "
            << volume <<  "/" << volumeMax << " : " 
            <<  (broken ? "broken" : "unbroken");
+        std::string V = ss.str();
+        std::cout << V;
         return ss.str();
     }
 };
