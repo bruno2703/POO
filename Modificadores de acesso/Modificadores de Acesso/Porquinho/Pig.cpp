@@ -1,15 +1,7 @@
-/*
-1)
-Fiz sozinho(com o que tava no moodle)
-2)
-sem duvidas
-3)
-5 horas
-*/
-
 #include <iostream>
 #include <vector>
 #include <utility>
+#include <iomanip>
 #include "aux.hpp"
 
 enum Cents {C10, C25, C50, C100};
@@ -43,21 +35,17 @@ class Item {
     std::string label;
     int volume;
 public:
-    Item(std::string label, int volume) {
-        setVolume(volume);
-        setLabel(label);
+    Item(std::string label, int volume) { //todo
     }
     int getVolume() const {
-        return volume; 
+        return {}; // todo
     }
     std::string getLabel() const {
-        return label; 
+        return {}; // todo
     }
     void setVolume(int volume) {
-        this-> volume = volume;
     }
     void setLabel(std::string label) {
-        this->label = label;
     }
     std::string str() const {
         return {}; // todo
@@ -76,72 +64,36 @@ class Pig {
     bool broken {false};
 
 public:
-    Pig(int volumeMax = 0) {
-    this->volumeMax = volumeMax;
-    this->itens = {};
-    this->volume = 0;
-    this->value = 0;
-    this-> broken = false;
-
+    Pig(int volumeMax = 0) { //todo
     }
     
     bool addCoin(Coin coin) {
-        if(broken==false)
-        {
-        this->value += coin.getValue();
-        this->volume += coin.getVolume();
-        }
-        else std::cout << "fail: the pig is broken"<<"\n";
-        return {}; 
+        return {}; // todo
     }
 
     bool addItem(Item item) {
-        if(broken==false)
-        {
-        this->volume += item.getVolume();
-        this-> itens.push_back(item.getLabel());
-        }
-        else std::cout << "fail: the pig is broken"<<"\n";
-        return {}; 
+        return {}; // todo
+
     }
 
     bool breakPig() {
-        broken = true;
-        this->volume = 0;
-        return {}; 
+        return {}; // todo
     }
 
     double getCoins() {
-        std::stringstream SS;
-        if(broken)
-        {
-        SS << aux::fmt(value);
-        std::string V = SS.str();
-        std::cout << V;
-        }
-        else std::cout << "fail: you must break the pig first"<<"\n";
-        return {}; 
+        return {}; // todo
     }
 
     std::string getItems() {
-        std::stringstream SS;
-        if(broken)
-        {
-        SS << aux::fmt(this->itens);
-        itens.clear();
-        }
-        else SS << "fail: you must break the pig first"<<"\n";
-        return SS.str(); 
+        return {}; // todo
     }
 
     std::string str() const {
         std::stringstream ss;
-        ss << aux::fmt(this->itens) << " : "
-           << aux::fmt(value) << "$ : "
+        ss << (this->itens | aux::FMT()) << " : "
+           << std::fixed << std::setprecision(2) << value << "$ : "
            << volume <<  "/" << volumeMax << " : " 
            <<  (broken ? "broken" : "unbroken");
-        std::string V = ss.str();
-        std::cout << V;
         return ss.str();
     }
 };
@@ -156,7 +108,8 @@ int main() {
 
     Pig pig;
     
-    auto toint = aux::to<int>;
+    auto toint = aux::STR2<int>();
+    auto fmtdouble = aux::PIPE(LAMBDA(x, x | aux::STR("%.2f")));
 
     chain["addCoin"] = [&]() { 
         if      (par[1] == "10") pig.addCoin(Coin(C10));
@@ -167,10 +120,9 @@ int main() {
     chain["init"]     = [&]() { pig = Pig(toint(par[1])); };
     chain["addItem"]  = [&]() { pig.addItem(Item(par[1], toint(par[2]))); };
     chain["break"]    = [&]() { pig.breakPig(); };
-    chain["getCoins"] = [&]() { aux::show << pig.getCoins(); };
-    chain["getItems"] = [&]() { aux::show << pig.getItems(); };
-    chain["show"]     = [&]() { aux::show << pig.str(); };
+    chain["getCoins"] = [&]() { pig.getCoins() | fmtdouble | aux::PRINT(); };
+    chain["getItems"] = [&]() { pig.getItems() | aux::PRINT(); };
+    chain["show"]     = [&]() { pig.str()      | aux::PRINT(); };
 
     aux::execute(chain, par);
 }
-
