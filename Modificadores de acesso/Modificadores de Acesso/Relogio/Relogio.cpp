@@ -5,26 +5,56 @@
 
 class Time {
 private:
-    int hour {0}, minute {0}, second {0};
+    int hour = 0;
+    int minute = 0;
+    int second = 0;
+   
 public:
     Time(int hour = 0, int minute = 0, int second = 0) {
+        setHour(hour);
+        setMinute(minute);
+        setSecond(second);
     }
     void setHour(int hour) {
+        if (hour < 0 || hour > 23) {
+            std::cout << "fail: hora invalida";
+        }
+        this->hour = hour;
     }
     void setMinute(int minute) {
+        if (minute < 0 || minute > 59) {
+            std::cout << "fail: minuto invalido";
+        }
+        this->minute = minute;
     }
     void setSecond(int second) {
+        if (second < 0 || second > 59) {
+            std::cout << "fail: segundo invalido";
+        }
+        this->second = second;
     }
     int getHour() {
-        return {}; // todo
+        return hour;
     }
     int getMinute() {
-        return {}; // todo
+        return minute;
     }
     int getSecond() {
-        return {}; // todo
+        return second;
     }
-    void nextSecond() {
+    void nextSecond(){
+        second++;
+        if (second > 59) {
+            second = 0;
+            minute++;
+            if (minute > 59) {
+                minute = 0;
+                hour++;
+                if (hour > 23) {
+                    hour = 0;
+                }
+            }
+        }
     }
     std::string str() {
         std::stringstream ss;
