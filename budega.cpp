@@ -4,7 +4,7 @@
 #include <list>
 #include <string>
 #include <utility>
-#include <aux.hpp>
+#include "aux.hpp"
 
 class Pessoa
 {
@@ -27,6 +27,12 @@ public:
     std::string toString() const
     {
         return nome;
+    }
+    std::string str() const
+    {
+        std::stringstream ss;
+        ss << nome;
+        return ss.str();
     }
 };
 std::ostream &operator<<(std::ostream &os, const Pessoa &p)
@@ -63,29 +69,40 @@ public:
     bool chamarNoCaixa(int indice)
     {
         validarIndice(indice);
-        if (caixas[indice] != nullptr)
+        if(caixas[indice] != nullptr)
         {
+            std::cout << "fail: caixa ocupado" << std::endl;
             return false;
         }
-        if (esperando.empty())
+        else if(esperando.empty())
         {
+            std::cout << "fail: sem clientes" << std::endl;
             return false;
         }
+        else{
         caixas[indice] = esperando.front();
         esperando.pop_front();
         return true;
+        }
     }
 
     std::shared_ptr<Pessoa> finalizar(int indice)
     {
-        validarIndice(indice);
-        if (caixas[indice] == nullptr)
-        {
+        if(indice < 0 || indice >= caixas.size()){
+            std::cout << "fail: caixa inexistente" << std::endl;
             return nullptr;
         }
+        else if(caixas[indice] == nullptr)
+        {
+            std::cout << "fail: caixa vazio" << std::endl;
+            return nullptr;
+        }
+        else
+        {
         auto cliente = caixas[indice];
         caixas[indice] = nullptr;
         return cliente;
+        }
     }
 
 std::string str() const

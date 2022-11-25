@@ -4,7 +4,8 @@
 #include <sstream>
 #include <utility>
 #include <iomanip> //setprecision
-#include <aux.hpp>
+#include "aux.hpp"
+using namespace std;
 
 
 class Grafite{
@@ -68,8 +69,8 @@ struct Lapiseira{
             tambor.push_back(grafite);
             return true;
         }
+        cout << "fail: calibre incompatível" << endl;
         return false;
-
     }
 
     PGrafite remover() {
@@ -81,19 +82,37 @@ struct Lapiseira{
     }
 
     void write() {
-        if (grafite == nullptr)
-            cout << "sem grafite" << endl;
+        if(grafite == nullptr)
+        {
+            cout << "fail: nao existe grafite no bico" << endl;
+        }
+        else if(grafite->getTamanho() <= 10)
+        {
+            cout << "fail: tamanho insuficiente" << endl;
+        }
+        else if((grafite->getTamanho() - grafite->desgastePorFolha()) <10)
+        {
+            grafite->setTamanho(10);
+            cout << "fail: folha incompleta" << endl;
+        }
+        else
+        {
         grafite->setTamanho(grafite->getTamanho() - grafite->desgastePorFolha());
-        if (grafite->getTamanho() <= 0)
-            grafite = nullptr;
+        }
     }
     void puxar() {
-        if (grafite != nullptr)
-            throw std::string("ja tem grafite");
-        if (tambor.empty())
-            throw std::string("tambor vazio");
+        if(grafite != nullptr)
+        {
+            cout << "fail: ja existe grafite no bico" << endl;
+        }
+        else if(tambor.empty())
+        {
+            cout << ("tambor vazio") << endl;
+        }
+        else{
         grafite = tambor.front();
         tambor.pop_front();
+        }
     }
     std::string str() const {
         std::ostringstream os;

@@ -1,7 +1,7 @@
 #include <iostream>
 #include <sstream>
 #include <memory>
-#include <aux.hpp>
+#include "aux.hpp"
 
 class Person {
     std::string name; //atributo
@@ -24,7 +24,7 @@ public:
     }
     std::string str() {
         std::stringstream ss;
-        ss << name << " " << age;
+        ss << name << ":" << age;
         return ss.str();
     }
 };
@@ -47,6 +47,7 @@ public:
             person = p;
             return true;
         }
+        std::cout << "fail: busy motorcycle" << std::endl;
         return false;
     }
 
@@ -69,19 +70,26 @@ public:
         this->time += time;
     }
 
-    void drive(int time) {
-        if (person != nullptr) {
-            if (person->getAge() <= 10) {
-                if (this->time > 0) {
-                    if (this->time >= time) {
-                        this->time -= time;
-                    } else {
-                        std::cout << "time ran out in the middle of the tour, " << person->getName() << " walked " << this->time << " minutes" << std::endl;
-                        this->time = 0;
-                    }
-                }
-            }
-        }
+    void drive(int time)
+    {
+        if (this->time > 0)
+        {
+            if(person != nullptr)
+            {
+                if(person->getAge() <= 10)
+                {
+                   if (this->time >= time){
+                       this->time -= time;
+                   }
+                   else{
+                       std::cout << "fail: time finished after " << this->time << " minutes" << std::endl;
+                       this->time =0;
+                   }
+                }else std::cout << "fail: too old to drive" << std::endl;
+            }else std::cout << "fail: empty motorcycle" << std::endl;
+        }else std::cout << "fail: buy time first" << std::endl; 
+        
+        
 
     }
 
@@ -92,7 +100,6 @@ public:
         return os.str();
     }
 };
-
 
 std::ostream& operator<<(std::ostream& os, Motorcycle m) {
     return os << m.str();
@@ -112,7 +119,7 @@ int main() {
         auto person = m.remove(); 
         if (person != nullptr) {
             *person | aux::PRINT();
-        }
+        }else std::cout << "fail: empty motorcycle" << std::endl;
     };
     chain["honk"]  = [&]() { m.honk()  | aux::PRINT(); };
     chain["init"]  = [&]() { m = Motorcycle(INT(param.at(1)));};

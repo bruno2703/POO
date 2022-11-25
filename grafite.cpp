@@ -3,7 +3,7 @@
 #include <memory>  //sharedptr
 #include <iomanip> //setprecision
 #include <utility> //exchange
-#include <aux.hpp>
+#include "aux.hpp"
 
 class Lead {
     float thickness;
@@ -76,7 +76,13 @@ struct Pencil {
         if (tip == nullptr && grafite->getThickness() == thickness) {
             tip = grafite;
             return true;
-        } else {
+        }
+        else if(tip != nullptr){
+            std::cout << "fail: ja existe grafite"  << std::endl;
+            return false;
+        } 
+        else {
+            std::cout << "fail: calibre incompativel" << std::endl;
             return false;
         }
     }
@@ -95,14 +101,29 @@ void writePage() {
         if (tip != nullptr) {
             int size = tip->getSize();
             int usage = tip->usagePerSheet();
-            if (size > 10) {
-                tip->setSize(size - usage);
-            } else {
-                cout << "fail: tamanho insuficiente" << endl;
+            int diferenca = (size-usage);
+
+            if(size > 10)
+            {
+                if(diferenca >= 10)
+                {
+                    tip->setSize(diferenca);
+                }
+                else
+                {
+                    tip->setSize(10);
+                    std::cout << "fail: folha incompleta" << std::endl;
+                }
+            } 
+            else
+            {
+                std::cout << "fail: tamanho insuficiente" << std::endl;
             }
+
+
         }
         else
-            cout << "fail: nao existe grafite" << endl;
+            std::cout << "fail: nao existe grafite" << std::endl;
     }
 
     std::string str() {
