@@ -1,10 +1,13 @@
 /*
 1)
-Fiz sozinho(com o que tava no moodle)
+Passou em todos os testes
 2)
-sem duvidas
+Fiz sozinho(com o que tava no moodle)
 3)
-5 horas
+aprendi fazendo
+4)
+muito tempo, muito tempo mesmo. 20 horas no minimo.
+Motivos: problemas de compatibilidade com o aux, acostumar com stringstream, entender a main, dificuldades com o setprecision.
 */
 
 #include <iostream>
@@ -86,22 +89,30 @@ public:
     }
     
     bool addCoin(Coin coin) {
-        if(broken==false)
+        if(broken==false && volumeMax >= (volume+coin.getVolume()))
         {
-        this->value += coin.getValue();
-        this->volume += coin.getVolume();
+            this->value += coin.getValue();
+            this->volume += coin.getVolume();
         }
-        else std::cout << "fail: the pig is broken"<<"\n";
+        else if(broken)
+        {
+            std::cout << "fail: the pig is broken"<<"\n";
+        }
+        else std::cout << "fail: the pig is full"<<"\n";
         return {}; 
     }
 
     bool addItem(Item item) {
-        if(broken==false)
+        if(broken==false && volumeMax >= (volume+item.getVolume()))
         {
-        this->volume += item.getVolume();
-        this-> itens.push_back(item.getLabel());
+            this->volume += item.getVolume();
+            this-> itens.push_back(item.getLabel());
         }
-        else std::cout << "fail: the pig is broken"<<"\n";
+        else if(broken)
+        {
+            std::cout << "fail: the pig is broken"<<"\n";
+        }
+        else std::cout << "fail: the pig is full"<<"\n";
         return {}; 
     }
 
@@ -112,15 +123,14 @@ public:
     }
 
     double getCoins() {
-        std::stringstream SS;
+        double Coins{0};
         if(broken)
         {
-        SS << std::fixed << std::setprecision(2) << value ;
-        std::string V = SS.str();
-        std::cout << V;
+         Coins = value;
+         value=0;
         }
         else std::cout << "fail: you must break the pig first"<<"\n";
-        return {}; 
+        return {Coins}; 
     }
 
     std::string getItems() {
@@ -130,7 +140,7 @@ public:
         SS << aux::fmt(this->itens);
         itens.clear();
         }
-        else SS << "fail: you must break the pig first"<<"\n";
+        else SS << "fail: you must break the pig first"<<"\n"<<"[]";
         return SS.str(); 
     }
 
@@ -141,7 +151,7 @@ public:
            << volume <<  "/" << volumeMax << " : " 
            <<  (broken ? "broken" : "unbroken");
         std::string V = ss.str();
-        std::cout << V;
+        //std::cout << V;
         return ss.str();
     }
 };
